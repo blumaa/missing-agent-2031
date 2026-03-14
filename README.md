@@ -80,17 +80,6 @@ src/
     scenes.ts               # Scene, choice, consequence types
     items.ts                # Item definition
 ```
-
-## Game Design
-
-- **3 chapters**, ~78 scenes, branching narrative with item/flag/health gating
-- **3 endings:** Reconnect, Destroy, or Coexist
-- **Quarter-heart health system** (12 max) with collapse/recovery
-- **Inventory:** 8 slots, items unlock choices
-- **Free-text input** scenes with keyword matching
-- **Typewriter text** with pagination for long passages, tap to cycle through pages
-- **Accessibility:** `prefers-reduced-motion` respected for animations and typewriter
-
 ## Conventions
 
 - All game components use `React.memo()`
