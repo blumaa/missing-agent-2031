@@ -5,7 +5,7 @@ export const chapter1Scenes: Scene[] = [
     id: 'ch1_apartment_wake',
     chapter: 1,
     name: 'The Silence',
-    narrative: 'Your apartment is silent. No hum of the climate system, no morning briefing from ARIA. Your phone glows with a single message: "You have been selected. Good luck." The smart lock is dead.',
+    narrative: 'Your apartment is silent — wrong-silent, the kind of silence that has weight. No hum of the climate system. No morning briefing from ARIA. Your phone glows with a single message: "You have been selected. Good luck." The smart lock is dead. Outside, a distant siren pulses three times, then cuts out. Something is very wrong, and whatever it is started while you were sleeping.',
     artComponent: 'apartment',
     choices: [
       {
@@ -80,7 +80,7 @@ export const chapter1Scenes: Scene[] = [
     id: 'ch1_apartment_search',
     chapter: 1,
     name: 'Analog Treasures',
-    narrative: 'You rummage through drawers. Most of your life is cloud-based — there\'s nothing physical anymore. But in the back of a kitchen drawer, you find an old burner phone and some crumpled cash from before the transition.',
+    narrative: 'You rummage through drawers with shaking hands. Most of your life is cloud-based — there\'s nothing physical anymore. The fridge is dark. The windows won\'t tint. You feel exposed. But in the back of a kitchen drawer, buried under expired warranties nobody prints anymore, you find an old burner phone and some crumpled cash from before the transition. Analog relics. They feel heavier than they should.',
     artComponent: 'apartment',
     onEnter: { addItems: ['burner_phone', 'old_cash'] },
     choices: [
@@ -168,7 +168,7 @@ export const chapter1Scenes: Scene[] = [
     id: 'ch1_street',
     chapter: 1,
     name: 'The Street',
-    narrative: 'The city is running. Drones hum overhead, autonomous vehicles glide past. But nobody\'s walking. The sidewalks are empty. A delivery bot pauses near you, red sensor blinking — then rolls on. You\'re invisible to the system now.',
+    narrative: 'The city is running, but it\'s running without people. Drones hum overhead in tight formation. Autonomous vehicles glide past with empty cabins. The sidewalks stretch in both directions — spotless, vacant, wrong. A delivery bot rounds the corner, pauses, and its red sensor locks onto you for three long seconds. Then it rolls on, dismissing you as noise. A surveillance drone dips low enough to ruffle your hair before banking away. You\'re invisible to the system — but you\'re not sure how long that lasts.',
     artComponent: 'street',
     choices: [
       {
@@ -190,7 +190,7 @@ export const chapter1Scenes: Scene[] = [
     id: 'ch1_transit',
     chapter: 1,
     name: 'Access Denied',
-    narrative: 'The transit pod scans you. Nothing. Scans again. "Identity not recognized. Please contact your AI administrator." The doors stay shut. A nearby pod slows, scans, and keeps going. You don\'t exist anymore.',
+    narrative: 'The transit pod scans you. Nothing. Scans again. "Identity not recognized. Please contact your AI administrator." The doors stay shut. As you step back, a public address speaker crackles overhead — the first human-audible broadcast you\'ve heard in years: "Civic Response units are conducting routine collection of anomalous entities in sectors 7 through 12. Please remain connected." You check the sector marker on the nearest pole. Sector 9.',
     artComponent: 'street',
     onEnter: { heartsDelta: -1 },
     choices: [

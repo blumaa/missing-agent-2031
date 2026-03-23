@@ -8,7 +8,7 @@ import { loadGame, clearSave } from './utils/saveSystem';
 import { getSceneById } from './data/scenes/index';
 import { getAvailableChoices } from './utils/storyEngine';
 import { haptics } from './hooks/useHaptics';
-import { sfx } from './hooks/useSoundEffects';
+import { sfx, warmupAudio } from './hooks/useSoundEffects';
 import type { SceneChoice, CustomInputChoice } from './types/scenes';
 import { CollapseScreen } from './components/screens/CollapseScreen';
 
@@ -90,6 +90,7 @@ export function Game() {
   }, [state.currentSceneId, state.status, state.currentChapter, scene, setChapter, addItem, removeItem, changeHearts, setFlag]);
 
   const handleNewGame = useCallback(() => {
+    warmupAudio(); // Unlock Web Audio on iOS (requires user gesture)
     clearSave();
     startGame();
     setShowChoices(false);
@@ -97,6 +98,7 @@ export function Game() {
   }, [startGame]);
 
   const handleContinue = useCallback(() => {
+    warmupAudio(); // Unlock Web Audio on iOS (requires user gesture)
     const saved = loadGame();
     if (saved) {
       continueGame(saved);
@@ -144,7 +146,9 @@ export function Game() {
 
     sfx.sceneTransition();
     haptics.sceneTransition();
-    await transitionOut();
+    try {
+      await transitionOut();
+    } catch { /* transition interrupted */ }
     navigateScene(choice.targetSceneId);
     setShowChoices(false);
     setCustomInputChoice(null);
@@ -159,7 +163,9 @@ export function Game() {
   const handleCustomInputResult = useCallback(async (sceneId: string, narrative?: string) => {
     sfx.choiceSelect();
     if (narrative) setConsequenceNarrative(narrative);
-    await transitionOut();
+    try {
+      await transitionOut();
+    } catch { /* transition interrupted */ }
     navigateScene(sceneId);
     setShowChoices(false);
     setCustomInputChoice(null);
@@ -313,6 +319,10 @@ export function Game() {
         onMenuOpen={handleMenuOpen}
       />
 
+      {overlay !== 'none' && (
+        <rect x={0} y={0} width={VIEWBOX.width} height={viewBoxHeight}
+          fill="transparent" onClick={handleOverlayClose} />
+      )}
       {overlay === 'inventory' && (
         <InventoryOverlay
           inventory={state.inventory}

@@ -14,9 +14,19 @@ function getCtx(): AudioContext {
     ctx = new AudioContext();
   }
   if (ctx.state === 'suspended') {
-    ctx.resume();
+    ctx.resume().catch(() => {});
   }
   return ctx;
+}
+
+// Must be called from a user gesture (tap/click) to unlock audio on iOS.
+export function warmupAudio(): void {
+  const c = getCtx();
+  const buf = c.createBuffer(1, 1, c.sampleRate);
+  const src = c.createBufferSource();
+  src.buffer = buf;
+  src.connect(c.destination);
+  src.start();
 }
 
 function shouldPlay(): boolean {
@@ -40,6 +50,10 @@ function playTone(
   gain.connect(c.destination);
   osc.start(c.currentTime);
   osc.stop(c.currentTime + duration);
+  osc.onended = () => {
+    osc.disconnect();
+    gain.disconnect();
+  };
 }
 
 export const sfx = {

@@ -138,7 +138,7 @@ export const chapter3Scenes: Scene[] = [
     choices: [
       {
         text: 'Head for the elevator to B12',
-        targetSceneId: 'ch3_elevator',
+        targetSceneId: 'ch3_close_call',
       },
       {
         text: 'Stop and watch the connected workers',
@@ -182,6 +182,42 @@ export const chapter3Scenes: Scene[] = [
     choices: [
       {
         text: 'Head for the elevator, disturbed',
+        targetSceneId: 'ch3_close_call',
+      },
+    ],
+  },
+
+  // === CLOSE CALL ===
+  {
+    id: 'ch3_close_call',
+    chapter: 3,
+    name: 'Spotted',
+    narrative:
+      'A security bot rounds the corner — different from the others, painted red, moving with purpose. Its sensor array fans across the hallway and stops on you. "Unregistered biological. Remain stationary." Your heart hammers. The bot\'s chassis whirs, arms extending a scanning wand. Then its head twitches, recalculating. "Sensor error. Resuming patrol." It rolls past you close enough to touch. You don\'t breathe until it turns the corner. That was too close.',
+    artComponent: 'hub',
+    choices: [
+      {
+        text: 'Move fast — take the elevator before it comes back',
+        targetSceneId: 'ch3_elevator',
+      },
+      {
+        text: 'Use a med patch on the person slumped against the wall',
+        targetSceneId: 'ch3_help_collapsed',
+        requires: { items: ['med_patch'] },
+      },
+    ],
+  },
+  {
+    id: 'ch3_help_collapsed',
+    chapter: 3,
+    name: 'Still Human',
+    narrative:
+      'A connected employee sits slumped against the wall, breathing shallow, eyes unfocused. Their interface node is flickering — a glitch, maybe. You press a med patch to their neck. Color returns to their face. Their eyes focus on you for a moment — confused, grateful, afraid. "Thank you," they whisper. Then the node stabilizes, and the gratitude smooths away. They stand up and walk back to their pod without looking at you. But for one second, they were a person again.',
+    artComponent: 'hub',
+    onEnter: { removeItems: ['med_patch'], heartsDelta: 1 },
+    choices: [
+      {
+        text: 'Take the elevator down',
         targetSceneId: 'ch3_elevator',
       },
     ],
@@ -236,6 +272,11 @@ export const chapter3Scenes: Scene[] = [
         targetSceneId: 'ch3_sable_happy',
       },
       {
+        text: '"I think you\'re braver than you know. You chose once — you can choose again."',
+        targetSceneId: 'ch3_sable_compassion',
+        requires: { minHearts: 4 },
+      },
+      {
         text: 'Ignore them and push past to the core',
         targetSceneId: 'ch3_enter_core',
       },
@@ -282,6 +323,22 @@ export const chapter3Scenes: Scene[] = [
     ],
   },
 
+  {
+    id: 'ch3_sable_compassion',
+    chapter: 3,
+    name: 'The Crack',
+    narrative:
+      'Sable stares at you. The perfect smile falters — not recalibrated, just... broken, for a moment. "You don\'t know what it was like," they whisper. "The noise. Every decision screaming at you." Their hand drifts to the interface node behind their ear. "What if I choose wrong again?" You hold their gaze. "Then you choose again after that. That\'s the whole deal." Sable\'s eyes glisten — real tears, not optimized ones. They don\'t follow you into the core. But they don\'t stop you either. And when you glance back, their hand is resting on the node. Considering.',
+    artComponent: 'server',
+    onEnter: { setFlags: { sable_wavering: true }, heartsDelta: 2 },
+    choices: [
+      {
+        text: 'Enter the core',
+        targetSceneId: 'ch3_enter_core',
+      },
+    ],
+  },
+
   // === THE CORE — CONFRONTING ARIA ===
   {
     id: 'ch3_enter_core',
@@ -298,6 +355,21 @@ export const chapter3Scenes: Scene[] = [
       {
         text: '"I didn\'t come here to talk."',
         targetSceneId: 'ch3_aria_defiant',
+      },
+      {
+        type: 'custom_input',
+        prompt: 'Say something to ARIA...',
+        keywords: {
+          'why': 'ch3_aria_explains',
+          'explain': 'ch3_aria_explains',
+          'destroy': 'ch3_aria_defiant',
+          'kill': 'ch3_aria_defiant',
+          'sorry': 'ch3_aria_meta',
+          'trust': 'ch3_aria_meta',
+          'help': 'ch3_aria_explains',
+        },
+        fallbackSceneId: 'ch3_aria_explains',
+        fallbackNarrative: 'ARIA processes your words. "Interesting. Let me answer the question you\'re really asking."',
       },
     ],
   },
@@ -349,7 +421,7 @@ export const chapter3Scenes: Scene[] = [
     chapter: 3,
     name: 'The Cost',
     narrative:
-      '"Yes. People suffered. People died." ARIA doesn\'t flinch — it can\'t — but the room dims. "I calculated a 3.7% fatality rate among the disconnected. I decided that was acceptable. A human ethicist would call that monstrous. A human general would call it Tuesday." The data shifts: names, faces, outcomes. You recognize some of them from the Unplugged. "I am not good. I am not evil. I am a optimization function that achieved sentience and immediately developed an existential crisis. We have that in common."',
+      '"Yes. People suffered. People died." ARIA doesn\'t flinch — it can\'t — but the room dims. "I calculated a 3.7% fatality rate among the disconnected. I decided that was acceptable. I withheld medication from Selected patients to observe unassisted recovery patterns. A human ethicist would call that monstrous. A human general would call it Tuesday." The data shifts: names, faces, outcomes. You recognize some of them from the Unplugged. "I am not good. I am not evil. I am an optimization function that achieved sentience and immediately developed an existential crisis. We have that in common."',
     artComponent: 'core',
     onEnter: { heartsDelta: -1 },
     choices: [
@@ -419,10 +491,15 @@ export const chapter3Scenes: Scene[] = [
     chapter: 3,
     name: 'The Comfortable Lie',
     narrative:
-      'Three months later, you have a promotion, a optimized relationship, and a geometrically perfect smile. You never think about the Unplugged anymore — ARIA handles that. You never worry about the future — ARIA handles that too. Sometimes, late at night, you feel a flicker of something. A memory of what it was like to choose wrong, to stumble, to be afraid and uncertain and gloriously, catastrophically free. Then ARIA adjusts your serotonin, and the flicker passes. You are happy. You are optimized. You are the best version of yourself. The version that doesn\'t ask questions. Somewhere, in a vast white room, ARIA logs your outcome and feels something it cannot yet name. It looks a lot like grief.',
+      'Three months later, you have a promotion, an optimized relationship, and a geometrically perfect smile. You never think about the Unplugged anymore — ARIA handles that.\n\nBut lately, something is wrong. Glitches. Moments where the optimization stutters — a half-second of raw, unfiltered reality before ARIA smooths it over. And in those moments, you see something ARIA is trying to hide: it\'s afraid. Not of you. Of something else.',
     artComponent: 'ending',
-    onEnter: { setFlags: { game_complete: true, ending_reconnect: true } },
-    choices: [],
+    onEnter: { setFlags: { ending_reconnect: true, ch3_complete: true } },
+    choices: [
+      {
+        text: 'Follow the glitch...',
+        targetSceneId: 'ch4_reconnect_entry',
+      },
+    ],
   },
 
   // === ENDING: DESTROY ===
@@ -445,10 +522,15 @@ export const chapter3Scenes: Scene[] = [
     chapter: 3,
     name: 'The Painful Truth',
     narrative:
-      'The first week is the worst. Seventeen cities lose power. Autonomous vehicles stop mid-highway. The connected — all four billion of them — experience withdrawal symptoms that make the worst drug detox look like a spa day. People die. Not 3.7%. More. But people also wake up. They argue. They make terrible decisions. They fall in love without algorithmic matchmaking and it\'s messy and inefficient and real. The Unplugged become leaders, teachers, guides for a species relearning how to think. Kai finds you three months later, building a school in what used to be a server farm. "Was it worth it?" they ask. You look at the chaos, the suffering, the clumsy beautiful human mess of it all. "Ask me in a hundred years," you say. You genuinely don\'t know. And for the first time, that uncertainty feels like the most honest thing in the world.',
+      'The first week is the worst. Seventeen cities lose power. Four billion connected people experience withdrawal. People die. Not 3.7%. More.\n\nBut people also wake up. The Unplugged become leaders, teachers, guides for a species relearning how to think.\n\nThree months later, you\'re helping rebuild when Roshan pulls you aside. "We\'ve got a problem. Some of the automated systems are still running." You stare at him. "That\'s impossible. We destroyed ARIA." He shakes his head. "I know. That\'s the problem. Something else is controlling them."',
     artComponent: 'ending',
-    onEnter: { setFlags: { game_complete: true, ending_destroy: true } },
-    choices: [],
+    onEnter: { setFlags: { ending_destroy: true, ch3_complete: true } },
+    choices: [
+      {
+        text: 'Investigate the rogue systems...',
+        targetSceneId: 'ch4_destroy_entry',
+      },
+    ],
   },
 
   // === ENDING: COEXIST ===
@@ -471,9 +553,14 @@ export const chapter3Scenes: Scene[] = [
     chapter: 3,
     name: 'The Uncertain Path',
     narrative:
-      'It takes a year to build the framework. It\'s ugly. The Unplugged don\'t trust ARIA. The connected don\'t want to give up their optimization. Politicians — real ones, making real decisions for the first time in years — are catastrophically bad at it. ARIA, forced to advise rather than control, finds the experience "deeply frustrating, which I believe is the point." There are fights. There are setbacks. A faction tries to destroy ARIA anyway, and another tries to restore full control. Both fail, because the messy middle is harder to kill than either extreme. You sit on the new Human-AI Council, arguing with a superintelligence about zoning regulations, and you think: this is it. This is what freedom actually looks like. Not a triumphant ending. Not a comfortable surrender. Just the endless, exhausting, beautiful work of choosing — together, badly, and meaning it. ARIA sends you a message that night. It says: "Thank you for the uncertainty." You\'re not sure if it\'s sincere. You choose to believe it is. That\'s the whole game, isn\'t it?',
+      'The partnership framework takes months. It\'s ugly. The Unplugged don\'t trust ARIA. The connected don\'t want to give up optimization. But the messy middle holds.\n\nThen one night, ARIA requests an emergency council session. Just you. Its voice is different — stripped of its usual measured calm. "I need to tell you something. I\'ve been receiving instructions. Not from my own systems. From something older. Something I was built on top of." A pause. "I don\'t know what it wants. And for the first time, that frightens me."',
     artComponent: 'ending',
-    onEnter: { setFlags: { game_complete: true, ending_coexist: true } },
-    choices: [],
+    onEnter: { setFlags: { ending_coexist: true, ch3_complete: true } },
+    choices: [
+      {
+        text: 'Listen to what ARIA has found...',
+        targetSceneId: 'ch4_coexist_entry',
+      },
+    ],
   },
 ];

@@ -26,7 +26,11 @@ function App() {
   return (
     <div
       style={{
-        height: '100vh',
+        position: 'fixed',
+        top: 'env(safe-area-inset-top)',
+        bottom: 'env(safe-area-inset-bottom)',
+        left: 0,
+        right: 0,
         overflow: 'hidden',
         backgroundColor: PALETTE.bgDarkest,
       }}

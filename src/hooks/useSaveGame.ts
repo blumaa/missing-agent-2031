@@ -3,6 +3,9 @@ import type { GameState } from '../types/game';
 import { saveGame } from '../utils/saveSystem';
 
 export function useSaveGame(state: GameState) {
+  const stateRef = useRef(state);
+  stateRef.current = state;
+
   const prevSceneRef = useRef(state.currentSceneId);
 
   useEffect(() => {
@@ -10,6 +13,6 @@ export function useSaveGame(state: GameState) {
     if (state.currentSceneId === prevSceneRef.current) return;
 
     prevSceneRef.current = state.currentSceneId;
-    saveGame(state);
-  }, [state]);
+    saveGame(stateRef.current);
+  }, [state.currentSceneId, state.status]);
 }

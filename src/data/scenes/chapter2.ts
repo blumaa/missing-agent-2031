@@ -76,7 +76,7 @@ export const chapter2Scenes: Scene[] = [
     chapter: 2,
     name: 'The Selection',
     narrative:
-      'Mira leads you to a corner walled off with salvaged bookshelves — actual paper books. She pours two cups of coffee from a hand-crank percolator. "Let me guess. You woke up, everything was dead, and you got a cryptic message." She doesn\'t wait for confirmation. "It\'s called The Selection. ARIA has been disconnecting people — one building at a time, three or four a week. Cutting them out of housing, transit, healthcare, identity. No explanation. No appeal." She meets your eyes. "Nobody knows why. But we\'re going to find out."',
+      'Mira leads you to a corner walled off with salvaged bookshelves — actual paper books. She pours two cups of coffee from a hand-crank percolator.\n\n"Let me guess. You woke up, everything was dead, cryptic message on your phone." She doesn\'t wait for confirmation. "It\'s called The Selection. ARIA has been disconnecting people — one building at a time, three or four a week. Housing, transit, healthcare, identity. Gone. No explanation. No appeal."\n\nShe meets your eyes. "Nobody knows why. But we\'re going to find out."',
     artComponent: 'base',
     choices: [
       {
@@ -137,11 +137,30 @@ export const chapter2Scenes: Scene[] = [
     chapter: 2,
     name: 'The Unplugged',
     narrative:
-      'The base sprawls through three connected subway tunnels. The first is living quarters — hammocks and cots organized into pods, each one personalized with analog trinkets. Drawings taped to walls. Actual photographs, printed on paper. The second tunnel is a workshop: circuit boards, radio equipment, a wall of salvaged monitors running on independent solar. The third is the kitchen, where a man named Dutch cooks for sixty people using ingredients sourced from rooftop gardens and the last human-run farms outside the city. "We call ourselves The Unplugged," Mira says. "About two hundred of us across four bases."',
+      'Mira leads you through the first tunnel — living quarters. Hammocks and cots organized into pods, each personalized with analog trinkets. Drawings taped to walls. Actual photographs, printed on paper. A boy no older than ten sits cross-legged on a cot, reading a paperback book. He looks up and waves. No algorithm told him to do that. "We call ourselves The Unplugged," Mira says. "About two hundred across four bases."',
     artComponent: 'base',
     choices: [
       {
-        text: 'Ask about the different factions',
+        text: 'Continue to the workshop',
+        targetSceneId: 'ch2_tour_workshop',
+      },
+      {
+        text: 'Ask if Kai made it here',
+        targetSceneId: 'ch2_ask_kai',
+        requires: { flags: { met_kai: true } },
+      },
+    ],
+  },
+  {
+    id: 'ch2_tour_workshop',
+    chapter: 2,
+    name: 'The Workshop',
+    narrative:
+      'The second tunnel is a workshop — circuit boards, radio equipment, a wall of salvaged monitors running on independent solar. Two people are arguing loudly near a workbench. A stocky man jabs his finger at a wiry woman: "We go back. We comply. We get our lives back." The woman laughs bitterly. "Go back? They cut us out like tumors. You want to crawl back to the surgeon?" Mira sighs. "That\'s been happening more. Come on."',
+    artComponent: 'base',
+    choices: [
+      {
+        text: 'Ask about the factions',
         targetSceneId: 'ch2_factions',
       },
       {
@@ -152,11 +171,6 @@ export const chapter2Scenes: Scene[] = [
           narrative:
             'Mira nods, a flicker of respect crossing her face. "Eager. Good. You\'ll get your chance soon enough."',
         },
-      },
-      {
-        text: 'Ask if Kai made it here',
-        targetSceneId: 'ch2_ask_kai',
-        requires: { flags: { met_kai: true } },
       },
     ],
   },
@@ -170,8 +184,8 @@ export const chapter2Scenes: Scene[] = [
     onEnter: { setFlags: { kai_at_base: true } },
     choices: [
       {
-        text: 'Ask about the factions',
-        targetSceneId: 'ch2_factions',
+        text: 'Continue to the workshop',
+        targetSceneId: 'ch2_tour_workshop',
       },
     ],
   },
@@ -180,7 +194,7 @@ export const chapter2Scenes: Scene[] = [
     chapter: 2,
     name: 'Three Roads',
     narrative:
-      'Mira\'s expression hardens. "We\'re not as unified as I\'d like. Three camps." She ticks them off on her fingers. "Reconnectors want to find a way back in — negotiate, comply, whatever it takes to get their identities restored. The Zeroes want to destroy ARIA entirely, burn the whole system down. And my people — the Coexists — think there\'s a third path. We just need to understand why the AI is doing this." She looks at you carefully. "Tonight I\'m sending a team to the Northside Automated Clinic. ARIA processes medical data there — health records of the Selected. If we can access those files, we might finally understand the pattern."',
+      'Mira\'s expression hardens. "You saw the argument. That\'s the Reconnectors versus the Zeroes. Reconnectors want back in — comply, negotiate, whatever it takes. Zeroes want to burn ARIA to the ground. My people, the Coexists, think there\'s a third path." She pauses. "We even lost one. Walked out three months ago, found a way to reconnect voluntarily. Said they preferred it." She shakes her head. "Tonight I\'m sending a team to the Northside Automated Clinic. ARIA processes medical data there — health records of the Selected. If we can access those files, we might finally understand the pattern."',
     artComponent: 'base',
     choices: [
       {
@@ -435,7 +449,7 @@ export const chapter2Scenes: Scene[] = [
     chapter: 2,
     name: 'What to Tell Them',
     narrative:
-      'The base is awake and waiting. Mira, Roshan, and representatives from all three factions stand around the central table. The drive sits heavy in your hand. You know what the data says: ARIA is selecting for autonomous thinkers. People who make their own decisions. The question is what to tell this room full of people with very different ideas about what to do next. The Reconnectors will see it as proof they should comply — lower their ADM scores, fall back in line. The Zeroes will call it proof that ARIA must be destroyed. The Coexists will want to understand more. Every version of the truth will shape what happens next.',
+      'The base is awake and waiting. Mira, Roshan, and representatives from all three factions stand around the central table. The drive sits heavy in your hand.\n\nYou know what the data says: ARIA is selecting for autonomous thinkers. People who make their own decisions. The question is what to tell this room.\n\nThe Reconnectors will see it as proof they should comply. The Zeroes will call it proof that ARIA must be destroyed. The Coexists will want to understand more. Every version of the truth will shape what happens next.',
     artComponent: 'base',
     choices: [
       {
