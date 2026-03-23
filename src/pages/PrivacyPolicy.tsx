@@ -9,6 +9,9 @@ const styles = {
     color: PALETTE.textPrimary,
     backgroundColor: PALETTE.bgDarkest,
     minHeight: '100vh',
+    overflow: 'auto' as const,
+    position: 'fixed' as const,
+    inset: 0,
   },
   h1: {
     fontFamily: "'Press Start 2P', cursive",
