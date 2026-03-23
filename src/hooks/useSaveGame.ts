@@ -4,9 +4,11 @@ import { saveGame } from '../utils/saveSystem';
 
 export function useSaveGame(state: GameState) {
   const stateRef = useRef(state);
-  stateRef.current = state;
-
   const prevSceneRef = useRef(state.currentSceneId);
+
+  useEffect(() => {
+    stateRef.current = state;
+  });
 
   useEffect(() => {
     if (state.status !== 'playing') return;
