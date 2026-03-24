@@ -14,10 +14,19 @@ function App() {
     if (!Capacitor.isNativePlatform()) return
 
     async function setup() {
-      await ScreenOrientation.lock({ orientation: 'portrait' })
-      await StatusBar.setStyle({ style: Style.Dark })
-      await StatusBar.hide()
-      await SplashScreen.hide()
+      try {
+        await Promise.allSettled([
+          ScreenOrientation.lock({ orientation: 'portrait' }),
+          StatusBar.setStyle({ style: Style.Dark }).then(() => StatusBar.hide()),
+        ])
+      } catch {
+        // Non-critical — continue even if orientation/statusbar fail (e.g. iPad)
+      }
+      try {
+        await SplashScreen.hide()
+      } catch {
+        // Splash screen hide can fail but app must still render
+      }
       setReady(true)
     }
     setup()
